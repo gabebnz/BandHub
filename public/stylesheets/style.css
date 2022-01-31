@@ -1,8 +1,113 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+* , *:before, *:after{ 
+  box-sizing:border-box; 
+  -moz-box-sizing:border-box; 
+  -webkit-box-sizing:border-box; 
+  -ms-box-sizing:border-box;
 }
 
-a {
-  color: #00B7FF;
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a{
+  text-decoration: none;
+  color: #f2f2f2;
+}
+
+body {
+  display:block;
+  font-family: 'Poppins', sans-serif;
+  background: #242424;
+  color: #f2f2f2;
+  
+  padding-left: 7vw;
+  padding-right: 7vw;
+}
+
+
+.hero{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height:calc(100vh - 13vh);
+}
+
+.hero h1{
+  font-size: 5rem;
+}
+
+.discoverprev{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height:100vh;
+  padding-top:30px;
+  justify-content: space-evenly;
+}
+
+.boxoutercontainer{
+  display:flex;
+  flex-direction: column;
+  margin-top:40px;
+  height: 30%;
+  width:100%;
+}
+
+.boxinnercontainer{
+  display:flex;
+  justify-content: flex-start;
+  gap: 20px;
+  height:100%;
+  width:100%;
+  margin-top:5px;
+  border-radius: 12px;
+  padding:15px;
+  background: #141414;
+
+  overflow-x: auto;
+}
+
+.box{
+  flex-shrink: 0;
+  display:block;
+  border-radius: 10px;
+
+  height:100%;
+  width: 400px;
+
+  padding:10px;
+
+  background: #242424;
+
+  overflow: hidden;
+}
+
+.box h1{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  font-size: 1.5rem;
+}
+.box h2{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+}
+.box h3{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #919191;
+  font-size: 0.8rem;
+}
+.box p{
+  font-size: 1rem;
+  height:65%;
+  bottom: 0;
 }

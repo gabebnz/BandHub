@@ -1,7 +1,15 @@
+
 doctype html
 html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+
+  //draws navbar
+  include navbar
+
+  // main content
   body
     block content
+  
+  include footer
