@@ -7,7 +7,6 @@
     align-items: center;
 
     height:13vh;
-
 }
 
 
@@ -15,15 +14,14 @@ h1{
     font-size: 3rem;
 }
 
-/* for coloring the hub part */
-span{
-    color:#FCEA46;
-}
-
 .title{
     display:flex;
     flex:1;
     align-items: baseline;
+}
+
+.title p{
+    font-size: 0.8rem;
 }
 
 

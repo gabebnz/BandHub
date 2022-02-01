@@ -1,7 +1,8 @@
 extends layout
 
 block content
-  h1 :(
+  h1: span :(
   h1= message
   h2= error.status
-  pre #{error.stack}
+  // Maybe remove the stack print? security?
+  pre #{error.stack} 
