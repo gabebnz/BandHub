@@ -1,0 +1,25 @@
+extends altlayout
+
+block content 
+    .flexcontainer
+        .formcontainer
+            .title 
+                h1: a(href="/") Band
+                    span Hub
+                p: span nz 
+            
+            form(class="login")
+                input(placeholder="Email" type="email" name="email")
+                input(placeholder="Password" type="password" name="password")
+                .inner 
+                    p(class='error-text-hide' id='err-text') ERROR TEXT :)
+                    button(type="submit") Login
+                    
+            button(class="logout") Log Out (temp) 
+
+            
+            p Don't have an account? 
+                a(href="/signup"): span Signup
+
+            .footer 
+                include footer

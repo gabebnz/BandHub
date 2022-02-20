@@ -4,10 +4,20 @@ block content
     .flexcontainer
         .formcontainer
             .title 
-                h1 Band
+                h1: a(href="/") Band
                     span Hub
                 p: span nz 
+
+            form(class="signup"  autocomplete="off")
+                input(placeholder="Email" type="email" name="email" )
+                input(placeholder="Password" type="password" name="password"  autocomplete="new-password")
+                input(placeholder="Confirm Password" type="password")
+                .inner 
+                    p(class='error-text-hide' id='err-text') ERROR TEXT :)
+                    button(type="submit") Signup
             
-            .form
+            p Already have an account? 
+                a(href="/login"): span Login
 
             .footer 
+                include footer

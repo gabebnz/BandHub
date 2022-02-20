@@ -5,3 +5,14 @@
     height:13vh;
     bottom:0;
 }
+
+.links{
+    font-size: 0.65rem;
+    display:flex;
+    justify-content: flex-end;
+    flex:1;
+}
+
+.links h2{
+    margin-left: 15px;
+}

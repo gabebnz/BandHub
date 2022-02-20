@@ -28,8 +28,8 @@ body {
   background: #242424;
   color: #f2f2f2;
   
-  padding-left: 7vw;
-  padding-right: 7vw;
+  padding-left: 10vw;
+  padding-right: 10vw;
 }
 
 
@@ -38,7 +38,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height:calc(100vh - 13vh);
+  height:calc(70vh - 13vh);
 }
 
 .hero h1{
