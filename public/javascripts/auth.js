@@ -63,16 +63,19 @@ if(loginForm != null){
 }
 
 // LOG OUT
-const logoutButton = document.querySelector('.logout') 
-logoutButton.addEventListener('click', () =>{
-    signOut(auth)
-			.then(() => {
-				console.log('User signed out successfully!')
-			})
-			.catch((err) => {
-				console.log(err.message)
-			})
-})
+const logoutButton = document.querySelector('.logout')
+	if(logoutButton != null){
+		logoutButton.addEventListener('click', () =>{
+			signOut(auth)
+				.then(() => {
+					console.log('User signed out successfully!')
+				})
+				.catch((err) => {
+					console.log(err.message)
+				})
+	})
+} 
+
 
 function errorText(err){
   // Change text to err message
