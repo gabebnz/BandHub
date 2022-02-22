@@ -1,5 +1,8 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js'
-import { getAuth, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js'
+import { getAuth, setPersistence, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, inMemoryPersistence} from 'https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js'
+import 'https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js';
+
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyB0kqmYDqT67y1q6sCmrCtEGMf6qoIbFcA",
@@ -13,13 +16,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-
+initializeApp(firebaseConfig);
 
 // AUTHENTICATION 
 const auth = getAuth();
-
+await setPersistence(auth, inMemoryPersistence)
 
 // SIGN UP
 const signupForm = document.querySelector('.signup')
@@ -54,7 +55,34 @@ if(loginForm != null){
 
     signInWithEmailAndPassword(auth, email, password)
       .then((cred) => {
-        console.log('User logged in successfully :)', cred.user)
+
+        const user = cred.user
+
+        return user.getIdToken().then((idToken) =>{
+          console.log(idToken)
+          return fetch("/sessionLogin", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+            },
+            body: JSON.stringify({idToken}),
+          })
+          .catch((err) =>{
+            console.log(err)
+          })
+        })
+        
+      })
+      .then(() => { // Sign out because we handle auth on the server
+        return signOut(auth)
+				.catch((err) => {
+					console.log(err.message)
+				})
+      })
+      .then(() => {
+        window.location.assign("/profile")
       })
       .catch((err) => {
         errorText(err)
@@ -66,13 +94,17 @@ if(loginForm != null){
 const logoutButton = document.querySelector('.logout')
 	if(logoutButton != null){
 		logoutButton.addEventListener('click', () =>{
-			signOut(auth)
-				.then(() => {
-					console.log('User signed out successfully!')
-				})
-				.catch((err) => {
-					console.log(err.message)
-				})
+			fetch("/sessionLogout", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+        }
+      })
+      .then(()=>{
+        window.location.assign("/")
+      })
 	})
 } 
 
