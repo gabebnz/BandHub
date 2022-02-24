@@ -31,15 +31,41 @@ if(signupForm != null){
 
     const email = signupForm.email.value 
     const password = signupForm.password.value
+    const password2 = signupForm.password2.value
 
-    createUserWithEmailAndPassword(auth, email, password)
+    if(password !== password2){
+      customErrorText("Passwords do not match...")
+    }
+    else{
+      createUserWithEmailAndPassword(auth, email, password)
       .then((cred) => {
-        console.log("user created: ", cred.user)
-        signupForm.reset()
+
+        const user = cred.user
+
+        return user.getIdToken().then((idToken) =>{
+          console.log(idToken)
+          return fetch("/createAccount", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+            },
+            body: JSON.stringify({idToken, user}),
+          })
+          .catch((err) =>{
+            console.log(err)
+          })
+        })
+
+      })
+      .then(() => {
+        window.location.assign("/login")
       })
       .catch((err) => {
         errorText(err)
       })
+    }
   })
 }
 
@@ -67,7 +93,8 @@ if(loginForm != null){
               "Content-Type": "application/json",
               "CSRF-Token": Cookies.get("XSRF-TOKEN"),
             },
-            body: JSON.stringify({idToken}),
+            body: JSON.stringify({idToken, user}),
+
           })
           .catch((err) =>{
             console.log(err)
@@ -108,6 +135,14 @@ const logoutButton = document.querySelector('.logout')
 	})
 } 
 
+function customErrorText(err){
+  // Change text to err message
+  const text = err
+  document.getElementById('err-text').textContent=text;
+
+  // make element visible
+  document.getElementById('err-text').className="error-text"
+}
 
 function errorText(err){
   // Change text to err message

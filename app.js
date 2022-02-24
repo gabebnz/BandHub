@@ -8,12 +8,18 @@ var logger = require('morgan');
 //Firebase stuff
 var admin = require("firebase-admin");
 
+
+
 var serviceAccount = require("./serviceAccountKey.json"); // make sure this isnt uploaded to git :)
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://bandhub-75fe2-default-rtdb.asia-southeast1.firebasedatabase.app"
 });
+
+admin.firestore().settings({
+  ignoreUndefinedProperties:true, // If data doesnt exist firebase wont throw error
+})
 
 var csrf = require('csurf');
 const csrfMiddleware = csrf({ cookie: true });
@@ -52,8 +58,13 @@ app.post("/sessionLogin", (req,res) => {
 
   admin.auth().createSessionCookie(idToken, {expiresIn})
     .then((sessionCookie) => {
+        res.clearCookie('session'); // incase user logs in while already logged in...
         const options = {maxAge: expiresIn, httpOnly: true, secure:true} // httponly so only backend can see this cookie
         res.cookie("session", sessionCookie, options)
+
+        req.app.locals.user = req.body.user;
+        req.app.locals.authed = true;
+
         res.end(JSON.stringify({status:"success"}))
       },
       (error) => {
@@ -65,8 +76,25 @@ app.post("/sessionLogin", (req,res) => {
     })
 })
 
+app.post("/createAccount", (req, res) => {
+  const user = req.body.user;
+
+  admin.firestore().collection('users').add({
+    uid: user.uid,
+    name: user.displayName,
+    email: user.email,
+    phone: user.phoneNumber,
+  })
+  .catch((err) => {
+    console.log(err.message)
+  })
+
+  // Make user account in firestore database.
+})
+
 app.use('/sessionLogout', (req, res) => {
   res.clearCookie('session');
+  req.app.locals.authed = false;
   res.redirect('/');
 });
 
@@ -84,7 +112,9 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.redirect("/login");
+
+  console.log("ERROR HANDLER: ", err.message)
+  res.redirect("/");
 });
 
 module.exports = app;

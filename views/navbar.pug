@@ -10,6 +10,12 @@ append head
   .links
     h2: a(href="/home") Find bands/members 
     h2: a(href="/discover") Discover 
-    h2: a(href="/login") Login 
-    h2: a(href="/signup") 
-      span Signup 
+
+    if ! authed 
+      h2: a(href="/login") Login 
+      h2: a(href="/signup") 
+        span Signup 
+
+    if authed 
+      h2: a(href="/profile") 
+        span Profile 
