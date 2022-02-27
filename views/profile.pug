@@ -1,5 +1,39 @@
 extends layout 
 
+block append head 
+    link(rel='stylesheet', href='/stylesheets/profile.css')
+
 block content 
-    h1 hello #{user.email}
-    button(class="logout") Log Out (temp) 
+    .profileContainer
+        // Yeah I mixed up left and right... no i wont change it...
+        .profileRight 
+            img(src="/images/blank-pfp.jpg")
+            button(class="editProfile") Edit Profile
+            button(class="logout") Log Out
+            
+        .profileMiddle
+            h1 Welcome to your profile, 
+                span #{user.email}
+
+        .profileLeft
+            h2 Your Groups 
+
+            a.bandLink(href="#")
+                img(src="/images/blank-pfp.jpg")
+                p Radiohead
+
+            a.bandLink(href="#")
+                img(src="/images/blank-pfp.jpg")
+                p The Smile 
+
+            a.bandLink(href="#")
+                img(src="/images/blank-pfp.jpg")
+                p Atoms For Peace
+
+
+
+                
+                
+
+
+            

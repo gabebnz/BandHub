@@ -5,10 +5,19 @@ var admin = require("firebase-admin");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'BandHub', authed: req.app.locals.authed  });
+  res.render('index', { title: 'BandHub', authed: req.session.authed });
 });
 
 router.get('/login', function(req, res, next) {
+
+  //check if user cookie exists
+  if(req.session.user){
+    console.log("User session exists on server");
+  }
+  else{
+    console.log("No User session exists on server");
+  }
+
   // somehow redirect if user is logged in... hmmm
   res.render('login', { title: 'BandHub | Login' });
 });
@@ -18,23 +27,29 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.get('/profile',sensitive, function(req, res) {
-
-  console.log(req.app.locals.user)
-  res.render('profile', { title: 'BandHub | Profile', authed: req.app.locals.authed , user: req.app.locals.user});
+  console.log("Profile Page User: ", req.session.user.email)
+  res.render('profile', { title: 'BandHub | Profile', authed: req.session.authed , user: req.session.user});
 });
 
 
 function sensitive(req, res, next){
+
+  if(!req.session.user){ // no user logged in, redirect to login.
+    console.log("NOT LOGGED IN, REDIRECTING");
+    res.redirect("/login")
+    return;
+  }
+
   const sessionCookie = req.cookies.session || "";
   admin.auth().verifySessionCookie(sessionCookie, true /**check if revoked */)
     .then(() => {
-      res.app.locals.authed = true;
+      req.session.authed = true; // reaffirm this... sometimes gets cleared?
       next();
     })
     .catch((error) => {
-      res.app.locals.authed = false;
+      res.redirect("/sessionLogout");
       console.log("NOT LOGGED IN, REDIRECTING");
-      res.redirect("/")
+      res.redirect("/login")
     })
 }
 

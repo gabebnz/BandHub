@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser')
 var logger = require('morgan');
+var session = require('express-session');
 
 //Firebase stuff
 var admin = require("firebase-admin");
@@ -22,7 +23,7 @@ admin.firestore().settings({
 })
 
 var csrf = require('csurf');
-const csrfMiddleware = csrf({ cookie: true });
+const csrfMiddleware = csrf({ cookie: true});
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -39,10 +40,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({secret:"fat secret <- maybe change lmao", sameSite:'lax', secure:true}));
 app.use(csrfMiddleware);
 
 app.all("*", (req, res, next) => { // Attatches csrf cookie token to all requests
-  res.cookie("XSRF-TOKEN", req.csrfToken());
+  const options = { sameSite: 'lax'} // httponly so only backend can see this cookie
+  res.cookie("XSRF-TOKEN", req.csrfToken(), options);
   next();
 })
 
@@ -59,11 +62,11 @@ app.post("/sessionLogin", (req,res) => {
   admin.auth().createSessionCookie(idToken, {expiresIn})
     .then((sessionCookie) => {
         res.clearCookie('session'); // incase user logs in while already logged in...
-        const options = {maxAge: expiresIn, httpOnly: true, secure:true} // httponly so only backend can see this cookie
+        const options = {maxAge: expiresIn, httpOnly: true, secure:true, sameSite: 'lax'} // httponly so only backend can see this cookie
         res.cookie("session", sessionCookie, options)
 
-        req.app.locals.user = req.body.user;
-        req.app.locals.authed = true;
+        req.session.user = req.body.user;
+        req.session.authed = true;
 
         res.end(JSON.stringify({status:"success"}))
       },
@@ -94,7 +97,8 @@ app.post("/createAccount", (req, res) => {
 
 app.use('/sessionLogout', (req, res) => {
   res.clearCookie('session');
-  req.app.locals.authed = false;
+  req.session.user = null;
+  req.session.authed = false;
   res.redirect('/');
 });
 
