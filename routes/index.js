@@ -27,8 +27,12 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.get('/profile',sensitive, function(req, res) {
-  console.log("Profile Page User: ", req.session.user.email)
   res.render('profile', { title: 'BandHub | Profile', authed: req.session.authed , user: req.session.user});
+});
+
+
+router.get('/profile/edit',sensitive, function(req, res) {
+  res.render('editProfile', { title: 'BandHub | Edit Profile', authed: req.session.authed , user: req.session.user});
 });
 
 

@@ -1,0 +1,51 @@
+extends layout 
+
+block append head 
+    link(rel='stylesheet', href='/stylesheets/profile.css')
+    link(rel='stylesheet', href='/stylesheets/editprofile.css')
+
+block content 
+    .profileContainer 
+        .profileRight 
+                img(src="/images/blank-pfp.jpg")
+
+                a(href="/profile")
+                    button(class="editProfile") View Profile
+
+                
+        .profileMiddle
+            h1 Edit Profile
+            h3 #{user.email}
+
+            form(class="editForm")
+                .infoSection
+                    .link
+                        p Display name
+                        input(placeholder="Display Name" type="text" name="displayName" value=user.name)
+
+                    .link
+                        p Description
+                        textarea(class="description" rows="5" placeholder="Tell us about yourself" type="text" name="Description" value=user.description)
+
+                    .link
+                        p Favourite Artists
+                        input(placeholder="Favourite artists. Separate by ',' " type="text" name="displayName" value=user.artists)
+
+                h2 Social links
+                .linkSection
+                    .link
+                        p Spotify
+                        input(placeholder="Spotify Profile Link" type="text" name="displayName" value=user.spotify)
+                    
+                    .link
+                        p Soundcloud
+                        input(placeholder="Soundcloud Profile Link" type="text" name="displayName" value=user.soundcloud)
+                    
+                    .link
+                        p Other website
+                        input(placeholder="Other Website Link" type="text" name="displayName" value=user.website)
+
+                    .link 
+                        p Phone Number
+                        input(placeholder="Contact Ph. Number" type="text" name="displayName" value=user.phone)
+

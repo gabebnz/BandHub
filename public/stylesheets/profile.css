@@ -12,19 +12,28 @@
     flex-grow:1;
     align-items: center;
     justify-content: flex-start;
-    max-width: 200px;
+    max-width: 175px;
 }
 
 .profileRight img{
     width:100%;
+    
     border-radius: 5000px; 
+    margin-bottom: 20px;
 }
 
 .profileMiddle{
     display: flex;
+    flex-direction: column;
     flex-grow: 5;
     padding-left: 40px;
     padding-right:40px;
+}
+
+.profileMiddle h1{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .profileLeft{
@@ -47,11 +56,10 @@
     width:100%;
     margin-bottom: 10px;
 
-    transition:0.5s;
+    transition:0.3s;
 }
 
 .bandLink:hover{
-    transition:0.5s;
     color: #fcea46;
 }
 
@@ -59,6 +67,13 @@
     width:15%;
     border-radius: 500px;
     min-width: 15%;
+
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.bandLink:hover img{
+    opacity: 1;
 }
 
 .bandLink p{
@@ -68,10 +83,17 @@
     text-overflow: ellipsis;
 }
 
+.profileRight a{
+    width: 75%;
+}
 
 .profileRight button{
     width:100%;
     margin-bottom: 15px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     color:#f2f2f2;
     background: none;
@@ -82,18 +104,16 @@
 
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
-    transition: 0.5s;
+    transition: 0.3s;
 }
 
 .profileRight button:hover{
-    transition:0.5s;
     cursor: pointer;
     border-bottom:1px solid #FCEA46;
 
 }
 
 .profileRight button:active{
-    transition:0.5s;
     cursor: pointer;
     color:#FCEA46;
     border-bottom:1px solid #FCEA46;

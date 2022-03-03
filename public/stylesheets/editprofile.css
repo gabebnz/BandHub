@@ -1,0 +1,91 @@
+.editForm{
+    display:flex;
+    flex-direction: column;
+    margin-top:30px;
+    width:100%;
+    max-width: 1000px;
+    height:50vh;
+}
+
+.profileMiddle h3{
+    font-size:0.9rem;
+    margin-top:-15px;
+}
+
+.profileMiddle p{
+    font-size: 0.9rem;
+}
+
+input{
+    font-family: 'Poppins', sans-serif;
+    background: none;
+    color: #f2f2f2;
+
+    width:40%;
+    max-width: 450px;
+    min-width: 250px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    text-decoration: none;
+    border:none;
+
+    border-bottom: 1px solid #f2f2f2;
+
+    margin-bottom: 15px;
+    padding: 10px;
+    transition: 0.5s;
+}
+
+input:focus{
+    transition: 0.5s;
+    border-bottom: 1px solid #FCEA46;
+    outline: none;
+}
+
+.description{
+    font-size:0.8rem;
+    font-family: 'Poppins', sans-serif;
+    background: none;
+    color: #f2f2f2;
+
+    width:40%;
+    max-width: 450px;
+    min-width: 250px;
+
+    text-decoration: none;
+    border:none;
+
+    border-bottom: 1px solid #f2f2f2;
+
+    margin-bottom: 15px;
+    padding: 10px;
+    transition: 0.5s;
+    transition-property:border;
+}
+
+.description:focus{
+    border-bottom: 1px solid #FCEA46;
+    outline: none;
+
+}
+
+.infoSection{
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    width:100%;
+    height:50%;
+}
+
+.linkSection{
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    width:100%;
+    height:50%;
+}
