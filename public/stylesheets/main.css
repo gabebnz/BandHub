@@ -17,6 +17,11 @@ a{
   color: #f2f2f2;
 }
 
+html{
+  padding-left: 10vw;
+  padding-right:10vw;
+}
+
 /* for coloring the hub part */
 span{
   color:#FCEA46;
@@ -28,8 +33,7 @@ body {
   background: #242424;
   color: #f2f2f2;
   
-  padding-left: 10vw;
-  padding-right: 10vw;
+  width:100%;
 }
 
 

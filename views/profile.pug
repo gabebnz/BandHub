@@ -4,6 +4,14 @@ block append head
     link(rel='stylesheet', href='/stylesheets/profile.css')
 
 block content 
+    -
+        // Variable Preparation
+        const date = Date(user.created)
+        const dateString = date.substr(4, 11)
+
+        const artists = user.artists.split(',')
+
+
     .profileContainer
         // Yeah I mixed up left and right... no i wont change it...
         .profileRight 
@@ -12,16 +20,40 @@ block content
             a(href="/profile/edit")
                 button(class="editProfile") Edit Profile
 
-            a(href="")   
+            a
                 button(class="logout") Log Out
-            
+
         .profileMiddle
             if(user.name)
                 h1 #{user.name}
             else
                 h1 #{user.email}
 
-            p #{user.description}
+            
+            .p3 Joined #{dateString}
+                if(user.admin)
+                    span  Admin
+
+            .socialIcons 
+                if(user.spotify)
+                    a.socialLink(href="https://open.spotify.com/artist/" + user.spotify)
+                        img(src="/images/spotify.png")
+                
+                if(user.soundcloud)
+                    a.socialLink(href="https://soundcloud.com/" + user.soundcloud)
+                        img(src="/images/soundcloud.png")
+                
+                if(user.otherLink)
+                    a.socialLink(href="https://" + user.otherLink)
+                        img(src="/images/website.png")
+
+            p(class="description") #{user.description}
+
+            .favouriteArtists 
+                h1 Favourite Artists
+                .list
+                    each artist in artists 
+                        p= artist
 
         .profileLeft
             h2 Your Groups 

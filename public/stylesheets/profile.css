@@ -9,7 +9,7 @@
 .profileRight{
     display:flex;
     flex-direction: column;
-    flex-grow:1;
+    
     align-items: center;
     justify-content: flex-start;
     max-width: 175px;
@@ -22,24 +22,41 @@
     margin-bottom: 20px;
 }
 
+.p3{
+    font-size: 0.8rem;
+    margin-top: -10px;
+    color: #f2f2f2ad;
+}
+
 .profileMiddle{
     display: flex;
     flex-direction: column;
-    flex-grow: 5;
+    width:100%;
     padding-left: 40px;
     padding-right:40px;
 }
 
 .profileMiddle h1{
+    font-size: 2.5rem;
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
+.description{
+    margin-top:25px;
+    white-space: pre-line;
+    min-height: 150px;
+    max-height:400px;
+    max-width:1000px;
+    overflow-y: auto;
+}
+
 .profileLeft{
     display:flex;
     flex-direction: column;
-    flex-grow:1;
+    
 
     max-width: 300px;
 }
@@ -75,7 +92,7 @@
 .bandLink:hover img{
     opacity: 1;
 }
-
+ 
 .bandLink p{
     margin-left:15px;
     white-space: nowrap;
@@ -118,4 +135,68 @@
     color:#FCEA46;
     border-bottom:1px solid #FCEA46;
 
+}
+
+.logout:hover{
+    cursor: pointer;
+    border-bottom:1px solid #fc4646 !important;
+
+}
+
+.logout:active{
+    cursor: pointer;
+    color:#fc4646 !important;
+    border-bottom:1px solid #fc4646 !important;
+
+}
+
+
+
+.socialIcons{
+    display:flex;
+    margin-top: 15px;
+    width:100%;
+    gap:20px;
+}
+
+.socialIcons img{
+    width:25px;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.socialIcons img:hover{
+    opacity: 1;
+}
+
+.favouriteArtists{
+    display:flex;
+    flex-direction: column;
+    margin-top: 50px;
+    width:100%;
+}
+
+.favouriteArtists h1{
+    font-size: 1rem;
+
+}
+
+.list{
+    display: flex;
+    width:100%;
+    max-width: 600px;
+    flex-wrap: wrap;
+    border-radius: 10px;
+    margin-top:5px;
+    gap: 10px;
+}
+
+.list p{
+    font-size: 0.8rem;
+    margin:0;
+    padding:10px;
+    border-radius: 10px;
+    background: #353535;
+    overflow: hidden;
+    transition: 0.3s;
 }

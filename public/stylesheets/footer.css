@@ -6,8 +6,17 @@
     bottom:0;
 }
 
+.footer img{
+    margin-bottom:-2px;
+    padding:0;
+    justify-self: baseline;
+    align-self: baseline;
+    width:15px;
+    filter: invert(100%) sepia(1%) saturate(138%) hue-rotate(347deg) brightness(115%) contrast(90%);
+}
+
 .links{
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     display:flex;
     justify-content: flex-end;
     flex:1;

@@ -27,12 +27,29 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.get('/profile',sensitive, function(req, res) {
-  res.render('profile', { title: 'BandHub | Profile', authed: req.session.authed , user: req.session.user});
+
+  admin.firestore().collection('users').doc(req.session.user.uid).get()
+  .then((data) => {
+    console.log(data)
+    res.render('profile', { title: 'BandHub | Profile', authed: req.session.authed , user: data.data()});
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+
 });
 
 
 router.get('/profile/edit',sensitive, function(req, res) {
-  res.render('editProfile', { title: 'BandHub | Edit Profile', authed: req.session.authed , user: req.session.user});
+
+  admin.firestore().collection('users').doc(req.session.user.uid).get()
+  .then((data) => {
+    res.render('editProfile', { title: 'BandHub | Edit Profile', authed: req.session.authed , user: data.data()});
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+
 });
 
 

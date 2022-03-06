@@ -4,10 +4,14 @@ block append head
     link(rel='stylesheet', href='/stylesheets/profile.css')
     link(rel='stylesheet', href='/stylesheets/editprofile.css')
 
+block append scripts 
+    script(type="module" src="../javascripts/profile.js")
+ 
 block content 
     .profileContainer 
         .profileRight 
                 img(src="/images/blank-pfp.jpg")
+                p profile images coming soon
 
                 a(href="/profile")
                     button(class="editProfile") View Profile
@@ -19,33 +23,43 @@ block content
 
             form(class="editForm")
                 .infoSection
-                    .link
+                    .section
                         p Display name
-                        input(placeholder="Display Name" type="text" name="displayName" value=user.name)
+                        input(value=user.name placeholder="Display Name" type="text" name="displayName" autocomplete="off")
 
-                    .link
+                    .section
                         p Description
-                        textarea(class="description" rows="5" placeholder="Tell us about yourself" type="text" name="Description" value=user.description)
+                        textarea(class="description" rows="5" placeholder="Tell us about yourself" type="text" name="description" autocomplete="off") #{user.description}
 
-                    .link
+                    .section
                         p Favourite Artists
-                        input(placeholder="Favourite artists. Separate by ',' " type="text" name="displayName" value=user.artists)
+                        input(value=user.artists placeholder="Favourite artists. Separate by ','" type="text" name="artists"  autocomplete="off")
 
-                h2 Social links
-                .linkSection
-                    .link
-                        p Spotify
-                        input(placeholder="Spotify Profile Link" type="text" name="displayName" value=user.spotify)
-                    
-                    .link
-                        p Soundcloud
-                        input(placeholder="Soundcloud Profile Link" type="text" name="displayName" value=user.soundcloud)
-                    
-                    .link
-                        p Other website
-                        input(placeholder="Other Website Link" type="text" name="displayName" value=user.website)
-
-                    .link 
+                    .section 
                         p Phone Number
-                        input(placeholder="Contact Ph. Number" type="text" name="displayName" value=user.phone)
+                        .p2 This will not be displayed on your public profile
+                        input(value=user.phone placeholder="Contact Ph. Number" type="text" name="phone" autocomplete="off")
 
+
+                h2 Social Profiles
+                .linkSection
+                    .section
+                        p Spotify
+                        .link 
+                            p spotify.com/artist/
+                            input(value=user.spotify placeholder="Spotify Profile ID" type="text" name="spotify" autocomplete="off")
+                    
+                    .section
+                        p Soundcloud
+                        .link 
+                            p soundcloud.com/
+                            input(value=user.soundcloud placeholder="Soundcloud Profile ID" type="text" name="soundcloud" autocomplete="off")
+                    
+                    .section
+                        p Other
+                        .link
+                            p https://
+                            input(value=user.otherLink placeholder="Other Website Link" type="text" name="otherLink" autocomplete="off")
+                
+                button(type="submit") Save
+                    

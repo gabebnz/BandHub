@@ -82,17 +82,39 @@ app.post("/sessionLogin", (req,res) => {
 app.post("/createAccount", (req, res) => {
   const user = req.body.user;
 
-  admin.firestore().collection('users').add({
+  admin.firestore().collection('users').doc(user.uid).set({
     uid: user.uid,
-    name: user.displayName,
     email: user.email,
-    phone: user.phoneNumber,
+    created: Date.now()
+  })
+  .then(() =>{
+    res.end(JSON.stringify({status:"success"}))
   })
   .catch((err) => {
     console.log(err.message)
   })
+})
 
-  // Make user account in firestore database.
+app.post("/submitEdit", (req,res) => {
+  const user = req.body.userData;
+  const collection = admin.firestore().collection('users')
+
+  collection.doc(req.session.user.uid).set({
+    name: user.name,
+    description: user.description,
+    artists: user.artists,
+    phone: user.phone,
+
+    spotify: user.spotify,
+    soundcloud: user.soundcloud,
+    otherLink: user.otherLink
+  }, {merge:true})
+  .then(() =>{
+    res.end(JSON.stringify({status:"success"}))
+  })
+  .catch((err) => {
+    console.log(err.message)
+  })
 })
 
 app.use('/sessionLogout', (req, res) => {
@@ -117,7 +139,7 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
 
-  console.log("ERROR HANDLER: ", err.message)
+  console.log("ERROR HANDLER: ", err)
   res.redirect("/");
 });
 

@@ -2,8 +2,6 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.7/firebase
 import { getAuth, setPersistence, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, inMemoryPersistence} from 'https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js'
 import 'https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js';
 
-
-
 const firebaseConfig = {
   apiKey: "AIzaSyB0kqmYDqT67y1q6sCmrCtEGMf6qoIbFcA",
   authDomain: "bandhub-75fe2.firebaseapp.com",
@@ -43,7 +41,6 @@ if(signupForm != null){
         const user = cred.user
 
         return user.getIdToken().then((idToken) =>{
-          console.log(idToken)
           return fetch("/createAccount", {
             method: "POST",
             headers: {
@@ -57,7 +54,6 @@ if(signupForm != null){
             console.log(err)
           })
         })
-
       })
       .then(() => {
         window.location.assign("/login")
