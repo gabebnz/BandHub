@@ -67,7 +67,7 @@ app.post("/sessionLogin", (req,res) => {
 
         req.session.user = req.body.user;
         req.session.authed = true;
-
+        
         res.end(JSON.stringify({status:"success"}))
       },
       (error) => {
@@ -111,6 +111,27 @@ app.post("/submitEdit", (req,res) => {
   }, {merge:true})
   .then(() =>{
     res.end(JSON.stringify({status:"success"}))
+  })
+  .catch((err) => {
+    console.log(err.message)
+  })
+})
+
+app.post("/submitPost", (req,res) => {
+  const data = req.body.postData;
+  admin.firestore().collection('posts').add({
+    uid: data.uid,
+    title: data.title,
+    description: data.description,
+    location: data.location,
+
+    phone: data.phone,
+    email: data.email,
+
+    created: Date.now(),
+  })
+  .then((data) =>{
+    res.send({PID:data.id})
   })
   .catch((err) => {
     console.log(err.message)

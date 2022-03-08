@@ -1,0 +1,58 @@
+extends layout
+
+block append head 
+    link(rel='stylesheet', href='/stylesheets/home.css')
+
+block content 
+    .flexcontainer 
+
+        // Only users should see this
+        if(user)
+            .boxoutercontainer 
+                h2 Your Posts
+                .boxinnercontainer
+                    .box 
+                        h1 Title looking for title 
+                        h2: span Example band 
+                        p This is a bunch of information about this band and what we play :).
+                        h3 4 hours ago
+                
+                .addNewContainer 
+                    a(href="/posts/new"): .addBox 
+                        h1 New post 
+                        p +
+        
+        .boxoutercontainer 
+            h2 Bands looking for members
+            .boxinnercontainer
+                .box 
+                    h1 Title looking for title 
+                    h2: span Example band 
+                    p This is a bunch of information about this band and what we play :) ok.This is a bunch of information about this band and what we play :) ok.This is a bunch of information about this band and what we play :) ok.
+                    h3 4 hours ago
+                .box 
+                    h1 Title looking for title 
+                    h2: span Example band 
+                    p This is a bunch of information about this band and what we play :) ok.
+                    h3 4 hours ago
+                .box 
+                    h1 Title looking for title 
+                    h2: span Example band 
+                    p This is a bunch of information about this band and what we play :) ok.This is a bunch of information about this band and what we play :) ok.This is a bunch of information about this band and what we play :) ok.
+                    h3 4 hours ago
+                .box 
+                    h1 Title looking for title 
+                    h2: span Example band 
+                    p This is a bunch of information about this band and what we play :) ok.
+                    h3 4 hours ago
+                .box 
+                    h1 Title looking for title 
+                    h2: span Example band 
+                    p This is a bunch of information about this band and what we play :) ok.
+                    h3 4 hours ago
+                .box 
+                    h1 Title looking for title 
+                    h2: span Example band 
+                    p This is a bunch of information about this band and what we play :) ok.
+                    h3 4 hours ago
+        

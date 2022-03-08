@@ -22,7 +22,7 @@ html{
   padding-right:10vw;
 }
 
-/* for coloring the hub part */
+/* for coloring anything yellow */
 span{
   color:#FCEA46;
 }
@@ -70,6 +70,8 @@ body {
 .boxinnercontainer{
   display:flex;
   justify-content: flex-start;
+  align-items: stretch;
+
   gap: 20px;
   height:100%;
   width:100%;
@@ -82,12 +84,13 @@ body {
 }
 
 .box{
-  flex-shrink: 0;
-  display:block;
+  display:flex;
+  flex-direction: column;
+  
   border-radius: 10px;
 
-  height:100%;
-  width: 400px;
+  min-height:190px;
+  min-width: 400px;
 
   padding:10px;
 
@@ -125,7 +128,7 @@ body {
   font-size: 0.8rem;
 }
 .box p{
-  font-size: 1rem;
+  font-size: 0.85rem;
   height:65%;
   bottom: 0;
 }

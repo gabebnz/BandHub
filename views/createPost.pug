@@ -1,0 +1,55 @@
+extends layout 
+
+block append head 
+    link(rel='stylesheet', href='/stylesheets/createpost.css')
+
+block append scripts 
+    script(type="module" src="/javascripts/posts.js")
+
+block content 
+    .flexcontainer 
+        h1 Create Post
+
+        form(class="postForm")
+            input(style="display:none" type='text' name='uid' value=user.uid)
+
+
+            .infoSection 
+                h2 Post Information
+                .section 
+                    p Title
+                    input(placeholder="Post title (required)" type="text" name="title" autocomplete="off" required)
+                
+                .section
+                    p Description
+                    textarea(class="description" rows="5" placeholder="Post description (required)" type="text" name="description" autocomplete="off" required)
+                
+                .section 
+
+                    // MAKE SURE TO ADD GOOGLE MAPS API TO THIS FOR AUTOCOMPLETE
+
+                    p Location
+                    input(placeholder="Location (required)" type="text" name="location" autocomplete="off" required)
+                
+            .contactSection 
+                h2 Contact Information
+                .p2 Choose how people can contact you about your post 
+                br 
+                .p2 (Enabling at least one of these methods is recommended)
+
+                .csection
+                    input(class="pcheckbox" type='checkbox' name='inclPhone' value="true") 
+                    p Include phone number (
+                        if(user.phone)
+                            span #{user.phone}
+                                p )
+                        else 
+                            span n/a
+                                p )
+
+                .csection
+                    input(class="echeckbox" type='checkbox' name='inclEmail' value="true" checked) 
+                    p Include email (
+                        span #{user.email}
+                            p )
+                button(type="submit") Submit

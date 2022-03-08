@@ -105,7 +105,7 @@ if(loginForm != null){
 				})
       })
       .then(() => {
-        window.location.assign("/profile")
+        window.location.assign("/home")
       })
       .catch((err) => {
         errorText(err)
