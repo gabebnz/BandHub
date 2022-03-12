@@ -8,8 +8,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'BandHub', authed: req.session.authed });
 });
 
-router.get('/home',getUser, function(req, res, next) {
-  res.render('home', {title: 'Bandhub | Home', authed: req.session.authed, user:req.user})
+router.get('/home',getUser, getPosts, function(req, res, next) {
+  res.render('home', {title: 'Bandhub | Home', authed: req.session.authed, user:req.user, posts:req.posts})
 });
 
 
@@ -131,8 +131,55 @@ function getUser(req, res, next){
     req.user = null;
     next();
   })
+}
 
-  
+// this will be a VERY slow function when there is lots of data...
+// could probably be rewritten when I understand firebase better?
+async function getPosts(req, res,next){
+  const currTime = Date.now()
+  const postAgeLimit =  currTime - 1209600000; // age limit (in ms) of post to get from database (set: 14 days)
+
+  const dataArray = []; // temp array for some data objects
+  const finalArray = []; // Main array to be set
+
+  // Get posts younger or equal to 14 days old.
+  const data = await admin.firestore().collection('posts').where('created', '>=', postAgeLimit).get()
+
+  if(data.empty){
+    console.log("NO POSTS FOUND...")
+    next();
+    return;
+  }
+
+  // Get data out of firebase object into array
+  // Also sets the id parameter so we can link to it later...
+  data.forEach(doc => {
+    const Tdoc = doc.data();
+    Tdoc.id = doc.id;
+
+    dataArray.push(Tdoc)
+  });
+
+  //prepare data
+  for(const dataObj of dataArray){
+    dataObj.description= dataObj.description.slice(0,150) // limit only 150 chars going to post preview
+
+    const user = await admin.firestore().collection('users').doc(dataObj.uid).get()
+
+    if(user.empty){
+      console.log("NO USER ACCOUNT FOUND FOR POST...")
+      return; // this skips this iteration. Post will not be added to the list
+    }
+    
+    dataObj.uid = user.data().name
+
+    // send data to array
+    finalArray.push(dataObj);
+  }
+
+  finalArray.reverse();
+  req.posts = finalArray;
+  next();
 }
 
 module.exports = router;

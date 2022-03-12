@@ -21,38 +21,48 @@ block content
                     a(href="/posts/new"): .addBox 
                         h1 New post 
                         p +
-        
+
         .boxoutercontainer 
             h2 Bands looking for members
             .boxinnercontainer
-                .box 
-                    h1 Title looking for title 
-                    h2: span Example band 
-                    p This is a bunch of information about this band and what we play :) ok.This is a bunch of information about this band and what we play :) ok.This is a bunch of information about this band and what we play :) ok.
-                    h3 4 hours ago
-                .box 
-                    h1 Title looking for title 
-                    h2: span Example band 
-                    p This is a bunch of information about this band and what we play :) ok.
-                    h3 4 hours ago
-                .box 
-                    h1 Title looking for title 
-                    h2: span Example band 
-                    p This is a bunch of information about this band and what we play :) ok.This is a bunch of information about this band and what we play :) ok.This is a bunch of information about this band and what we play :) ok.
-                    h3 4 hours ago
-                .box 
-                    h1 Title looking for title 
-                    h2: span Example band 
-                    p This is a bunch of information about this band and what we play :) ok.
-                    h3 4 hours ago
-                .box 
-                    h1 Title looking for title 
-                    h2: span Example band 
-                    p This is a bunch of information about this band and what we play :) ok.
-                    h3 4 hours ago
-                .box 
-                    h1 Title looking for title 
-                    h2: span Example band 
-                    p This is a bunch of information about this band and what we play :) ok.
-                    h3 4 hours ago
-        
+                each post in posts
+                    -
+                        // Variable Preparation + awfully long time calculator
+                        const today = Date.now()
+                        const date = post.created
+                        const difference = Math.abs(date-today)/1000;
+                        var finalTime="";
+
+                        if(difference < 3600){
+                            const minutes = Math.floor(difference / 60) % 60;
+                            if(minutes > 1 || minutes == 0){
+                                finalTime = minutes + " minutes ago"
+                            }
+                            else{
+                                finalTime = minutes + " minute ago"
+                            }
+                        }
+                        else if(difference < 86400){ // <1 day
+                            const hours = Math.floor(difference / 3600) % 24;
+                            if(hours > 1 || hours == 0){
+                                finalTime = hours + " hours ago"
+                            }
+                            else{
+                                finalTime = hours + " hour ago"
+                            }
+                        } 
+                        else{
+                            const days = Math.floor(difference / 86400);
+                            if(hours > 1){
+                                finalTime = days + " days ago"
+                            }
+                            else{
+                                finalTime = days + " day ago"
+                            }
+                        }
+
+                    a(class="box" href="/posts/"+post.id)
+                        h1= post.title
+                        h2: span= post.uid
+                        p= post.description + "..."
+                        h3= finalTime

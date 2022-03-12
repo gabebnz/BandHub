@@ -36,7 +36,6 @@ body {
   width:100%;
 }
 
-
 .hero{
   display: flex;
   flex-direction: column;
@@ -55,6 +54,7 @@ body {
   align-items: center;
   height:130vh;
   padding-top:30px;
+  height:auto;
   justify-content: space-evenly;
 }
 
@@ -63,34 +63,39 @@ body {
   flex-direction: column;
   margin-top:40px;
   flex:1;
-  max-height: 400px;
   width:100%;
 }
 
 .boxinnercontainer{
   display:flex;
-  justify-content: flex-start;
-  align-items: stretch;
+  flex-wrap: wrap;
+
+  justify-content: center;
+  align-items: center;
 
   gap: 20px;
+
   height:100%;
   width:100%;
+
   margin-top:5px;
   border-radius: 12px;
-  padding:15px;
-  background: #141414;
 
-  overflow-x: auto;
+  padding:15px;
+  
+  background: #141414;
 }
 
 .box{
   display:flex;
+  flex:1;
   flex-direction: column;
   
   border-radius: 10px;
 
-  min-height:190px;
-  min-width: 400px;
+  min-width: 49%;
+
+  height:200px;
 
   padding:10px;
 
@@ -128,7 +133,9 @@ body {
   font-size: 0.8rem;
 }
 .box p{
+  white-space: pre-line;
   font-size: 0.85rem;
   height:65%;
   bottom: 0;
+  overflow:hidden;
 }
