@@ -4,8 +4,8 @@ var router = express.Router();
 var admin = require("firebase-admin");
 
 // MAIN ROUTES ----------------------------
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'BandHub', authed: req.session.authed });
+router.get('/', getPosts, getUser,function(req, res, next) {
+  res.render('index', { title: 'BandHub', authed: req.session.authed, posts:req.posts, user:req.user});
 });
 
 router.get('/home',getUser, getPosts, function(req, res, next) {
@@ -19,7 +19,7 @@ router.get('/posts/new', sensitive, getUser, function(req, res, next) {
   res.render('createPost', {title:'Bandhub | Create Post', authed: req.session.authed, user:req.user})
 })
 
-router.get('/posts/:id', async function(req, res, next) {
+router.get('/posts/:id', getUser, async function(req, res, next) {
   var postObj;
   var userObj;
 
@@ -58,11 +58,11 @@ router.get('/posts/:id', async function(req, res, next) {
     })
   }
   catch(e) {
-    return res.sendStatus(404).render('error');;
+    return res.sendStatus(404).render('error');
   }
   
 
-  res.render('post', {title:'Bandhub | ' + postObj.title, authed: req.session.authed, post: postObj, postUser:userObj})
+  res.render('post', {title:'Bandhub | ' + postObj.title, authed: req.session.authed, post: postObj, postUser:userObj, user:req.user})
 })
 
 
@@ -78,16 +78,24 @@ router.get('/signup', function(req, res, next) {
 
 
 // PROFILE ROUTES  --------------------------------
-router.get('/profile',sensitive, getUser, function(req, res) {
-  res.render('profile', { title: 'BandHub | Profile', authed: req.session.authed, user:req.user });
-});
-
 router.get('/profile/edit',sensitive,getUser, function(req, res) {
   res.render('editProfile', { title: 'BandHub | Edit Profile', authed: req.session.authed , user: req.user});
 });
 
+router.get('/profile/:id', getUser, async function(req, res) {
+  var userProfile;
 
+  await admin.firestore().collection('users').doc(req.params.id).get()
+  .then((data) => {
+    userProfile = data.data();
+  })
+  .catch((err) => {
+    console.log(err)
+    res.sendStatus(404); // no post with this id...
+  })
 
+  res.render('profile', { title: 'BandHub | Profile', authed: req.session.authed, profile:userProfile, user: req.user});
+});
 
 
 
@@ -171,7 +179,7 @@ async function getPosts(req, res,next){
       return; // this skips this iteration. Post will not be added to the list
     }
     
-    dataObj.uid = user.data().name
+    dataObj.user = user.data().name
 
     // send data to array
     finalArray.push(dataObj);

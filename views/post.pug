@@ -7,7 +7,21 @@ block append scripts
     script(type="module" src="/javascripts/posts.js")
 
 block content 
-    h1 #{post.title}
-    p post user: #{postUser.name}
-    p post user phone: #{postUser.phone}
-    p post user email: #{postUser.email}
+    -
+        // Variable Preparation
+        const date = new Date(post.created)
+        const dateString = date.toString().substr(4, 11)
+
+    .postcontainer 
+        h1 #{post.title}
+        .p3 Posted #{dateString}
+        
+        p(class="description") #{post.description}
+    
+        .contactsection
+            h3 Author's Profile
+            a(href="/profile/"+postUser.uid) 
+                h2: span #{postUser.name} 
+            p #{postUser.email}
+            p #{postUser.phone}
+            

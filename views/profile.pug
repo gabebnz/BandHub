@@ -6,10 +6,10 @@ block append head
 block content 
     -
         // Variable Preparation
-        const date = Date(user.created)
-        const dateString = date.substr(4, 11)
+        const date = new Date(profile.created)
+        const dateString = date.toString().substr(4, 11)
 
-        const artists = user.artists.split(',')
+        const artists = profile.artists.split(',')
 
 
     .profileContainer
@@ -17,37 +17,39 @@ block content
         .profileRight 
             img(src="/images/blank-pfp.jpg")
 
-            a(href="/profile/edit")
-                button(class="editProfile") Edit Profile
+            if user
+                if user.uid == profile.uid
+                    a(href="/profile/edit")
+                        button(class="editProfile") Edit Profile
 
-            a
-                button(class="logout") Log Out
+                    a
+                        button(class="logout") Log Out
 
         .profileMiddle
-            if(user.name)
-                h1 #{user.name}
+            if(profile.name)
+                h1 #{profile.name}
             else
-                h1 #{user.email}
+                h1 #{profile.email}
 
             
             .p3 Joined #{dateString}
-                if(user.admin)
+                if(profile.admin)
                     span  Admin
 
             .socialIcons 
-                if(user.spotify)
-                    a.socialLink(href="https://open.spotify.com/artist/" + user.spotify)
+                if(profile.spotify)
+                    a.socialLink(href="https://open.spotify.com/artist/" + profile.spotify)
                         img(src="/images/spotify.png")
                 
-                if(user.soundcloud)
-                    a.socialLink(href="https://soundcloud.com/" + user.soundcloud)
+                if(profile.soundcloud)
+                    a.socialLink(href="https://soundcloud.com/" + profile.soundcloud)
                         img(src="/images/soundcloud.png")
                 
-                if(user.otherLink)
-                    a.socialLink(href="https://" + user.otherLink)
+                if(profile.otherLink)
+                    a.socialLink(href="https://" + profile.otherLink)
                         img(src="/images/website.png")
 
-            p(class="description") #{user.description}
+            p(class="description") #{profile.description}
 
             .favouriteArtists 
                 h1 Favourite Artists
@@ -56,7 +58,7 @@ block content
                         p= artist
 
         .profileLeft
-            h2 Your Groups 
+            h2 Your Groups (WiP)
 
             a.bandLink(href="#")
                 img(src="/images/blank-pfp.jpg")

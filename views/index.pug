@@ -1,6 +1,46 @@
 extends layout
 
 block content
+  -
+    // Variable Preparation + awfully long time calculator
+    function getTime(ms){
+      const today = Date.now()
+      const date = ms
+      const difference = Math.abs(date-today)/1000;
+      var finalTime="";
+
+      if(difference < 3600){
+        const minutes = Math.floor(difference / 60) % 60;
+        if(minutes > 1){
+          finalTime = minutes + " minutes ago"
+        }
+        else{
+          finalTime = "Just now"
+        }
+      }
+      else if(difference < 86400){ // <1 day
+        const hours = Math.floor(difference / 3600) % 24;
+        if(hours > 1 || hours == 0){
+          finalTime = hours + " hours ago"
+        }
+        else{
+          finalTime = hours + " hour ago"
+        }
+      } 
+      else{
+        const days = Math.floor(difference / 86400);
+        if(days > 1){
+          finalTime = days + " days ago"
+        }
+        else{
+          finalTime = days + " day ago"
+        }
+      }
+
+      return finalTime;
+    }
+
+
   .hero
     h1 Join 
       span Bands
@@ -16,48 +56,16 @@ block content
       span new?
  
     .boxoutercontainer 
-      h2 Bands looking for members
-      .boxinnercontainer
-        .box 
-          h1 Title looking for title 
-          h2: span Example band 
-          p This is a bunch of information about this band and what we play :) ok.
-          h3 4 hours ago
-        .box 
-          h1 Title looking for title 
-          h2: span Example band 
-          p This is a bunch of information about this band and what we play :) ok.
-          h3 4 hours ago
-        .box 
-          h1 Title looking for title 
-          h2: span Example band 
-          p This is a bunch of information about this band and what we play :) ok.
-          h3 4 hours ago
-        .box 
-          h1 Title looking for title 
-          h2: span Example band 
-          p This is a bunch of information about this band and what we play :) ok.
-          h3 4 hours ago
-        .box 
-          h1 Title looking for title 
-          h2: span Example band 
-          p This is a bunch of information about this band and what we play :) ok.
-          h3 4 hours ago
-        .box 
-          h1 Title looking for title 
-          h2: span Example band 
-          p This is a bunch of information about this band and what we play :) ok.
-          h3 4 hours ago
-        .box 
-          h1 Title looking for title 
-          h2: span Example band 
-          p This is a bunch of information about this band and what we play :) ok.
-          h3 4 hours ago
-        .box 
-          h1 Title looking for title 
-          h2: span Example band 
-          p This is a bunch of information about this band and what we play :) ok.
-          h3 4 hours ago
+        h2 Recent Posts
+        .boxinnercontainer
+            each post in posts
+                a(class="box" href="/posts/"+post.id)
+                    h1= post.title
+                    h2: span= post.user
+                    p= post.description + "..."
+                    h3= getTime(post.created)
+            else 
+                h3 There are no posts :(
 
     .boxoutercontainer
       h2 Musicians looking for bands
@@ -94,14 +102,3 @@ block content
           h2: span Example band 
           p This is a bunch of information about this band and what we play :) ok.
           h3 4 hours ago
-
-        .box 
-          h1 Title looking for title 
-          h2: span Example band 
-          p This is a bunch of information about this band and what we play :) ok.
-          h3 4 hours ago
-
-  //SCRIPTS
-  script(src='/javascripts/sidescroll.js')
-
-

@@ -18,9 +18,19 @@ a{
 }
 
 html{
-  padding-left: 10vw;
-  padding-right:10vw;
+  padding-left: 20vw;
+  padding-right:20vw;
 }
+
+@media only screen and (max-width:1750px){
+  html{
+    padding-left: 10vw;
+    padding-right:10vw;
+  }
+}
+
+
+
 
 /* for coloring anything yellow */
 span{
@@ -86,11 +96,30 @@ body {
   background: #141414;
 }
 
+.personalboxinnercontainer{
+  display:flex;
+  
+  align-items: center;
+
+  overflow-x: auto;
+
+  gap: 20px;
+
+  height:100%;
+  width:100%;
+
+  margin-top:5px;
+  border-radius: 12px;
+
+  padding:15px;
+  
+  background: #141414;
+}
+
 .box{
   display:flex;
-  flex:1;
   flex-direction: column;
-  
+  flex:1;
   border-radius: 10px;
 
   min-width: 49%;

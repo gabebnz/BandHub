@@ -142,7 +142,7 @@ app.use('/sessionLogout', (req, res) => {
   res.clearCookie('session');
   req.session.user = null;
   req.session.authed = false;
-  res.redirect('/');
+  res.redirect('/login');
 });
 
 

@@ -1,19 +1,33 @@
-.flexcontainer{
+.p3{
+    font-size: 0.95rem;
+    margin-top: -10px;
+    color: #f2f2f2ad;
+}
+
+.postcontainer{
     display:flex;
     flex-direction: column;
 
-    width:100%;
+    width:70%;
     height:100%;
 }
 
-.addNewContainer{
-    display:flex;
-    justify-content: flex-end;
-    gap: 20px;
-    height:100%;
-    width:100%;
+.description{
     margin-top:15px;
-    border-radius: 12px;
+    white-space: pre-line;
+}
+
+.contactsection{
+    margin-top:25px;
+}
+
+.contactsection h3{
+    color: #f2f2f2ad;
+    font-size:1rem;
+    margin-bottom:-10px;
+}
+.contactsection h2{
+    font-size:2rem;
 }
 
 .addBox{
@@ -41,10 +55,3 @@
     transition: 0.3s;
     font-size: 1.5rem;
 }
-
-.addBox:hover p{
-    transition: 0.3s;
-    color:#FCEA46;
-}
-
-
