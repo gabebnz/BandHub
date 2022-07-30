@@ -5,7 +5,7 @@ block append head
 
 block content 
     -
-        // Variable Preparation + awfully long time calculator
+            // Variable Preparation + time calculator
         function getTime(ms){
             const today = Date.now()
             const date = ms
@@ -14,33 +14,19 @@ block content
 
             if(difference < 3600){
                 const minutes = Math.floor(difference / 60) % 60;
-                if(minutes > 1){
-                    finalTime = minutes + " minutes ago"
-                }
-                else{
-                    finalTime = "Just now"
-                }
+                finalTime = minutes + ((minutes > 1) ? " minutes ago" : " minute ago");
             }
             else if(difference < 86400){ // <1 day
                 const hours = Math.floor(difference / 3600) % 24;
-                if(hours > 1 || hours == 0){
-                    finalTime = hours + " hours ago"
-                }
-                else{
-                    finalTime = hours + " hour ago"
-                }
+                finalTime = hours + ((hours > 1 || hours == 0) ? " hours ago" : " hour ago")
             } 
             else{
                 const days = Math.floor(difference / 86400);
-                if(days > 1){
-                    finalTime = days + " days ago"
-                }
-                else{
-                    finalTime = days + " day ago"
-                }
+                finalTime = days + ((days > 1) ? " days ago" : " day ago")
             }
-
+            console.log(finalTime)
             return finalTime;
+        
         }
 
 
@@ -50,13 +36,16 @@ block content
             .boxoutercontainer 
                 h2 Your Posts
                 .personalboxinnercontainer
-                    each post in posts
-                        if post.uid == user.uid
-                            a(class="box" href="/posts/"+post.id)
-                                h1= post.title
-                                h2: span= post.user
-                                p= post.description + "..."
-                                h3= getTime(post.created)
+                    if posts != null
+                        each post in posts
+                            if post.uid == user.uid
+                                a(class="box" href="/posts/"+post.id)
+                                    h1= post.title
+                                    h2: span= post.user
+                                    p= post.description + "..."
+                                    h3= getTime(post.created)
+                    else 
+                        h3 Create a post to see it here
                 
                 .addNewContainer 
                     a(href="/posts/new"): .addBox 
@@ -66,11 +55,12 @@ block content
         .boxoutercontainer 
             h2 Recent Posts
             .boxinnercontainer
-                each post in posts
-                    a(class="box" href="/posts/"+post.id)
-                        h1= post.title
-                        h2: span= post.user
-                        p= post.description + "..."
-                        h3= getTime(post.created)
+                if posts != null
+                    each post in posts
+                        a(class="box" href="/posts/"+post.id)
+                            h1= post.title
+                            h2: span= post.user
+                            p= post.description + "..."
+                            h3= getTime(post.created)
                 else 
                     h3 There are no posts :(

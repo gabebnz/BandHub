@@ -9,6 +9,7 @@ router.get('/', getPosts, getUser,function(req, res, next) {
 });
 
 router.get('/home',getUser, getPosts, function(req, res, next) {
+  console.log('here' + req.posts)
   res.render('home', {title: 'Bandhub | Home', authed: req.session.authed, user:req.user, posts:req.posts})
 });
 
@@ -145,8 +146,10 @@ function getUser(req, res, next){
 // could probably be rewritten when I understand firebase better?
 async function getPosts(req, res,next){
   const currTime = Date.now()
-  const postAgeLimit =  currTime - 1209600000; // age limit (in ms) of post to get from database (set: 14 days)
 
+  //const postAgeLimit =  currTime - 1209600000; // age limit (in ms) of post to get from database (set: 14 days)
+  const postAgeLimit = 0;
+  
   const dataArray = []; // temp array for some data objects
   const finalArray = []; // Main array to be set
 
