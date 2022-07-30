@@ -58,12 +58,13 @@ block content
     .boxoutercontainer 
         h2 Recent Posts
         .boxinnercontainer
-            each post in posts
-                a(class="box" href="/posts/"+post.id)
-                    h1= post.title
-                    h2: span= post.user
-                    p= post.description + "..."
-                    h3= getTime(post.created)
+            if posts != null
+              each post in posts
+                  a(class="box" href="/posts/"+post.id)
+                      h1= post.title
+                      h2: span= post.user
+                      p= post.description + "..."
+                      h3= getTime(post.created)
             else 
                 h3 There are no posts :(
 
